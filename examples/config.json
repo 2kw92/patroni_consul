@@ -1,0 +1,28 @@
+{
+    "bind_addr": "0.0.0.0",
+    "bootstrap_expect": 3,
+    "client_addr": "0.0.0.0",
+    "data_dir": "/var/lib/consul",
+    "enable_script_checks": true,
+    "dns_config": {
+        "enable_truncate": true,
+        "only_passing": true
+    },
+    "enable_syslog": true,
+    "encrypt": "EfZ6Wj/x1Q75YmiA5CYN5taDbMnQgYhRHfGdRDMkuW0=",
+    "leave_on_terminate": true,
+    "log_level": "INFO",
+    "rejoin_after_leave": true,
+    "retry_join": [
+        "postgresql-patroni0",
+        "postgresql-patroni1",
+        "postgresql-patroni2"
+    ],
+    "server": true,
+    "start_join": [
+        "postgresql-patroni0",
+        "postgresql-patroni1",
+        "postgresql-patroni2"
+    ],
+   "ui_config": { "enabled": true }
+}

@@ -27,7 +27,7 @@ chmod 775 /var/lib/consul /etc/consul.d
 Сгенерируем ключ для консула на любой из нод кластера  
 `consul keygen`
 
-Создаем конфигурационный файл для консула [config.json](examples/config.json)
+Создаем конфигурационный файл для консула [/etc/consul.d/config.json](examples/config.json)
 
 <details><summary>Параметры конфига</summary>
 
@@ -90,7 +90,7 @@ Active: active (running) since ...
 
 #### Установка Postgresql и Patroni
 
-Устанавливаем Postgres и необходимы пакеты на машинах **pg-patroni01-03**  
+Устанавливаем Postgres и необходимы пакеты на машинах **postgresql-patroni0-2**  
 ```
 wget -qO- https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo tee /etc/apt/trusted.gpg.d/pgdg.asc &>/dev/null
 sudo apt update -y
@@ -145,12 +145,12 @@ mkdir /etc/patroni
 
 Мы увидим следующую картину
 ```
-root@pg-patroni01:~# patronictl -c /etc/patroni/patroni.yml list
-+ Cluster: postgres (7179980654024895527) --------+----+-----------+
-| Member       | Host         | Role    | State   | TL | Lag in MB |
-+--------------+--------------+---------+---------+----+-----------+
-| pg-patroni01 | 10.5.252.217 | Replica | running |  2 |         0 |
-| pg-patroni02 | 10.5.252.218 | Leader  | running |  2 |           |
-| pg-patroni03 | 10.5.252.219 | Replica | running |  2 |         0 |
-+--------------+--------------+---------+---------+----+-----------+
+root@postgresql-patroni0:~# patronictl -c /etc/patroni/patroni.yml list
++ Cluster: postgres --+-----------------+---------+---------+----+-----------+
+| Member              | Host            | Role    | State   | TL | Lag in MB |
++---------------------+-----------------+---------+---------+----+-----------+
+| postgresql-patroni0 | 158.160.106.183 | Replica | running |  2 |         0 |
+| postgresql-patroni1 | 158.160.103.149 | Leader  | running |  2 |           |
+| postgresql-patroni2 | 158.160.105.130 | Replica | running |  2 |         0 |
++---------------------+-----------------+---------+---------+----+-----------+
 ```
