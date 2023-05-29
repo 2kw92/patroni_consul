@@ -209,3 +209,15 @@ patronictl -c /etc/patroni/patroni.yml switchover postgres
 ```
 patronictl -c /etc/patroni/patroni.yml reinit postgres postgresql-patroni2
 ```
+
+
+---Немного про sysbench---
+
+apt install git
+git clone https://github.com/Percona-Lab/sysbench-tpcc.git
+curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.deb.sh | sudo bash
+sudo apt -y install sysbench
+
+./tpcc.lua --pgsql-port=5432 --pgsql-user=postgres --pgsql-password=postgres --pgsql-db=postgres --time=30 --threads=3 --tables=3 --scale=10 --report-interval=5 --db-driver=pgsql prepare
+
+./tpcc.lua --pgsql-port=5432 --pgsql-user=postgres --pgsql-password=postgres --pgsql-db=postgres --time=30 --threads=3 --tables=3 --scale=10 --report-interval=5 --db-driver=pgsql run
