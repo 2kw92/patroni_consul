@@ -9,7 +9,7 @@
         "only_passing": true
     },
     "enable_syslog": true,
-    "encrypt": "EfZ6Wj/x1Q75YmiA5CYN5taDbMnQgYhRHfGdRDMkuW0=",
+    "encrypt": "7tnAlH2+N/yEAeeIknIXDHDsUOUYl8n65n86lJY5GPQ=",
     "leave_on_terminate": true,
     "log_level": "INFO",
     "rejoin_after_leave": true,
