@@ -154,3 +154,58 @@ root@postgresql-patroni0:~# patronictl -c /etc/patroni/patroni.yml list
 | postgresql-patroni2 | 158.160.105.130 | Replica | running |  2 |         0 |
 +---------------------+-----------------+---------+---------+----+-----------+
 ```
+
+
+Изменим параметры с помощью команды
+
+```
+patronictl -c /etc/patroni/patroni.yml edit-config
+```
+
+И посмотрим на то что для применинения параметров требуется рестарт:
+
+```
+root@postgresql-patroni0:~# patronictl -c /etc/patroni/patroni.yml list postgres
++ Cluster: postgres --+-----------------+---------+---------+----+-----------+-----------------+
+| Member              | Host            | Role    | State   | TL | Lag in MB | Pending restart |
++---------------------+-----------------+---------+---------+----+-----------+-----------------+
+| postgresql-patroni0 | 158.160.106.183 | Replica | running |  2 |         0 | *               |
+| postgresql-patroni1 | 158.160.103.149 | Leader  | running |  2 |           | *               |
+| postgresql-patroni2 | 158.160.105.130 | Replica | running |  2 |         0 | *               |
++---------------------+-----------------+---------+---------+----+-----------+-----------------+
+
+```
+
+Или 
+
+```
+curl -s http://localhost:8008/patroni | grep pend
+{"state": "running", "postmaster_start_time": "2023-05-28 20:12:35.829118+00:00", "role": "replica", "server_version": 150003, "xlog": {"received_location": 117440512, "replayed_location": 117440512, "replayed_timestamp": "2023-05-28 20:14:05.570839+00:00", "paused": false}, "timeline": 2, "dcs_last_seen": 1685349522, "database_system_identifier": "7238325751068226103", "pending_restart": true, "patroni": {"version": "3.0.2", "scope": "postgres"}}
+```
+Обращаем внимание на **"pending_restart": true**
+
+Рестарт одной ноды
+
+```
+patronictl -c /etc/patroni/patroni.yml restart postgres postgresql-patroni1
+```
+
+Рестарт всего кластера
+```
+patronictl -c /etc/patroni/patroni.yml restart postgres
+```
+
+Рестарт reload кластера
+```
+patronictl -c /etc/patroni/patroni.yml reload postgres
+```
+
+Плановое переключение
+```
+patronictl -c /etc/patroni/patroni.yml switchover postgres
+```
+
+Реинициализации ноды
+```
+patronictl -c /etc/patroni/patroni.yml reinit postgres postgresql-patroni2
+```
