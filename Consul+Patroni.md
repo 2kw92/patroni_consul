@@ -105,8 +105,8 @@ rm -rf /var/lib/postgresql/15/main/*
 
 Устанавливаем Patroni и необходимые пакеты
 ```
-apt install python3 python3-pip python3-psycopg2
-pip3 install patroni[consul]
+apt install -y python3 python3-pip python3-psycopg2 && \
+pip3 install patroni[consul] && \
 mkdir /etc/patroni
 ```
 Создаем конфигурационный файл [/etc/patroni/patroni.yml](examples/patroni.yml)
@@ -218,6 +218,8 @@ git clone https://github.com/Percona-Lab/sysbench-tpcc.git
 curl -s https://packagecloud.io/install/repositories/akopytov/sysbench/script.deb.sh | sudo bash
 sudo apt -y install sysbench
 
-./tpcc.lua --pgsql-port=5432 --pgsql-user=postgres --pgsql-password=postgres --pgsql-db=postgres --time=30 --threads=3 --tables=3 --scale=10 --report-interval=5 --db-driver=pgsql prepare
+./tpcc.lua --pgsql-port=5432 --pgsql-user=postgres --pgsql-password=postgres --pgsql-db=postgres --time=10 --threads=1 --tables=1 --scale=1 --report-interval=5 --db-driver=pgsql prepare
 
-./tpcc.lua --pgsql-port=5432 --pgsql-user=postgres --pgsql-password=postgres --pgsql-db=postgres --time=30 --threads=3 --tables=3 --scale=10 --report-interval=5 --db-driver=pgsql run
+./tpcc.lua --pgsql-port=5432 --pgsql-user=postgres --pgsql-password=postgres --pgsql-db=postgres --time=10 --threads=1 --tables=1 --scale=1 --report-interval=5 --db-driver=pgsql run
+
+./tpcc.lua --pgsql-port=5432 --pgsql-user=postgres --pgsql-password=postgres --pgsql-db=postgres --time=10 --threads=1 --tables=1 --scale=1 --report-interval=5 --db-driver=pgsql cleanup
